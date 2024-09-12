@@ -14,15 +14,21 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+// CORS setup (adjust according to your frontend's URL)
+app.use(cors({
+  origin: process.env.CLIENT_URL || "*", // Add your frontend URL or use '*' for all
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(morgan("dev"));
 
-
+// Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 
+// Test route
 app.get("/", (req, res) => {
   res.send("<h1>Welcome to ecommerce app</h1>");
 });
